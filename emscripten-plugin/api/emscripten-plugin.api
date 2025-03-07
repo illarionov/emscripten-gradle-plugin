@@ -32,6 +32,7 @@ public final class at/released/builder/emscripten/EmscriptenPrepareCacheTask$Lin
 }
 
 public abstract class at/released/builder/emscripten/EmscriptenSdk {
+	public static final field Companion Lat/released/builder/emscripten/EmscriptenSdk$Companion;
 	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/provider/ProviderFactory;Lorg/gradle/process/ExecOperations;)V
 	public final fun buildEmBuilderCommandLine (Lkotlin/jvm/functions/Function1;)Ljava/util/List;
 	public final fun buildEmMakeCommandLine (Lkotlin/jvm/functions/Function1;)Ljava/util/List;
@@ -49,6 +50,10 @@ public abstract class at/released/builder/emscripten/EmscriptenSdk {
 	public final fun getEmscriptenRoot ()Lorg/gradle/api/provider/Property;
 	public final fun getEmsdkEnvironment ()Ljava/util/Map;
 	public final fun prepareEmscriptenCache ()V
+}
+
+public final class at/released/builder/emscripten/EmscriptenSdk$Companion {
+	public final fun defaultEmscriptenRoot (Lorg/gradle/api/provider/ProviderFactory;)Lorg/gradle/api/provider/Provider;
 }
 
 public abstract interface annotation class at/released/builder/emscripten/InternalEmscriptenApi : java/lang/annotation/Annotation {

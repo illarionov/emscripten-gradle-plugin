@@ -246,7 +246,7 @@ public abstract class EmscriptenSdk @Inject constructor(
         }
     }
 
-    private companion object {
+    public companion object {
         internal const val EMSCRIPTEN_VERSION = "4.0.4"
 
         private val EMCC_VERSION_REGEX = """emcc\s+\(Emscripten.+\)\s+(\S+)\s+.*""".toRegex()
