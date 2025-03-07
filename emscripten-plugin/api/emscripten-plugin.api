@@ -1,0 +1,59 @@
+public final class at/released/builder/emscripten/EmscriptenAttributes {
+	public static final field INSTANCE Lat/released/builder/emscripten/EmscriptenAttributes;
+	public final fun getEMSCRIPTEN_USE_PTHREADS_ATTRIBUTE ()Lorg/gradle/api/attributes/Attribute;
+	public final fun getEmscriptenOperatingSystem (Lorg/gradle/api/model/ObjectFactory;)Lorg/gradle/nativeplatform/OperatingSystemFamily;
+	public final fun getWasm32Architecture (Lorg/gradle/api/model/ObjectFactory;)Lorg/gradle/nativeplatform/MachineArchitecture;
+	public final fun getWasmApiUsage (Lorg/gradle/api/model/ObjectFactory;)Lorg/gradle/api/attributes/Usage;
+	public final fun getWasmBinaryLibraryElements (Lorg/gradle/api/model/ObjectFactory;)Lorg/gradle/api/attributes/LibraryElements;
+	public final fun getWasmRuntimeUsage (Lorg/gradle/api/model/ObjectFactory;)Lorg/gradle/api/attributes/Usage;
+}
+
+public class at/released/builder/emscripten/EmscriptenPrepareCacheTask : org/gradle/api/DefaultTask {
+	public fun <init> (Lorg/gradle/process/ExecOperations;Lorg/gradle/api/file/ProjectLayout;Lorg/gradle/api/model/ObjectFactory;)V
+	public final fun build ()V
+	public final fun getCacheDirectory ()Lorg/gradle/api/file/DirectoryProperty;
+	public final fun getEmscriptenSdk ()Lat/released/builder/emscripten/EmscriptenSdk;
+	public final fun getLto ()Lorg/gradle/api/provider/Property;
+	public final fun getPic ()Lorg/gradle/api/provider/Property;
+	public final fun getTargets ()Lorg/gradle/api/provider/ListProperty;
+	public final fun getWasm64 ()Lorg/gradle/api/provider/Property;
+}
+
+public final class at/released/builder/emscripten/EmscriptenPrepareCacheTask$LinkTimeOptimizer : java/lang/Enum {
+	public static final field FULL Lat/released/builder/emscripten/EmscriptenPrepareCacheTask$LinkTimeOptimizer;
+	public static final field NONE Lat/released/builder/emscripten/EmscriptenPrepareCacheTask$LinkTimeOptimizer;
+	public static final field THIN Lat/released/builder/emscripten/EmscriptenPrepareCacheTask$LinkTimeOptimizer;
+	public static fun valueOf (Ljava/lang/String;)Lat/released/builder/emscripten/EmscriptenPrepareCacheTask$LinkTimeOptimizer;
+	public static fun values ()[Lat/released/builder/emscripten/EmscriptenPrepareCacheTask$LinkTimeOptimizer;
+}
+
+public abstract class at/released/builder/emscripten/EmscriptenSdk {
+	public fun <init> (Lorg/gradle/api/model/ObjectFactory;Lorg/gradle/api/provider/ProviderFactory;Lorg/gradle/process/ExecOperations;)V
+	public final fun buildEmBuilderCommandLine (Lkotlin/jvm/functions/Function1;)Ljava/util/List;
+	public final fun buildEmMakeCommandLine (Lkotlin/jvm/functions/Function1;)Ljava/util/List;
+	public final fun buildEmccCommandLine (Lkotlin/jvm/functions/Function1;)Ljava/util/List;
+	public final fun buildEmconfigureCommandLine (Lkotlin/jvm/functions/Function1;)Ljava/util/List;
+	public final fun checkEmsdkVersion ()V
+	public final fun getEmConfigureExecutablePath ()Lorg/gradle/api/provider/Property;
+	public final fun getEmMakeExecutablePath ()Lorg/gradle/api/provider/Property;
+	public final fun getEmbuilderExecutablePath ()Lorg/gradle/api/provider/Property;
+	public final fun getEmccExecutablePath ()Lorg/gradle/api/provider/Property;
+	public final fun getEmccVersion ()Lorg/gradle/api/provider/Property;
+	public final fun getEmscriptenCacheBase ()Lorg/gradle/api/file/DirectoryProperty;
+	public final fun getEmscriptenCacheDir ()Lorg/gradle/api/file/DirectoryProperty;
+	public final fun getEmscriptenConfigFile ()Lorg/gradle/api/file/ConfigurableFileCollection;
+	public final fun getEmscriptenRoot ()Lorg/gradle/api/provider/Property;
+	public final fun getEmsdkEnvironment ()Ljava/util/Map;
+	public final fun prepareEmscriptenCache ()V
+}
+
+public abstract interface annotation class at/released/builder/emscripten/InternalEmscriptenApi : java/lang/annotation/Annotation {
+}
+
+public class at/released/builder/emscripten/ValidateDwarfTask : org/gradle/api/DefaultTask {
+	public fun <init> (Lorg/gradle/process/ExecOperations;Lorg/gradle/api/model/ObjectFactory;)V
+	public final fun getPaths ()Lorg/gradle/api/provider/ListProperty;
+	public final fun getWasmBinary ()Lorg/gradle/api/file/RegularFileProperty;
+	public final fun validate ()V
+}
+
