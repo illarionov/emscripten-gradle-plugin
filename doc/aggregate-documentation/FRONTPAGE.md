@@ -8,7 +8,7 @@ The latest release is available on Maven Central. Add the following to your plug
 
 ```
 plugins { 
-    id("at.released.builder.emscripten.plugin") version "<not yet released>"
+    id("at.released.builder.emscripten.plugin") version "0.1-alpha01"
 }
 ```
 

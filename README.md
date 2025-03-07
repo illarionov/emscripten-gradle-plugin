@@ -11,3 +11,4 @@ Currently in early development and subject to change.
 For more information, visit the project website: [https://illarionov.github.io/emscripten-gradle-plugin](https://illarionov.github.io/emscripten-gradle-plugin)
 
 [Emscripten]: https://emscripten.org/
+[Maven Central]: https://central.sonatype.com/artifact/at.released.builder.emscripten/plugin
