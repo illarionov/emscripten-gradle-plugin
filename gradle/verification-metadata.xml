@@ -39,6 +39,9 @@
          </trusted-key>
          <trusted-key id="837B2CBB1D966C80643A2D6527F164F945828C4C" group="^com[.]willowtreeapps($|([.].*))" regex="true"/>
          <trusted-key id="8756C4F765C9AC3CB6B85D62379CE192D401AB61" group="com.diffplug.durian"/>
+         <trusted-key id="8A10792983023D5D14C93B488D7F1BEC1E2ECAE7" group="^com[.]fasterxml($|([.].*))" regex="true"/>
+         <trusted-key id="8E3A02905A1AE67E7B0F9ACD3967D4EDA591B991" group="org.jetbrains.kotlinx" name="kotlinx-html-jvm"/>
+         <trusted-key id="98465301A4939C0279F2E847D89D05374952262B" group="org.jetbrains.dokka"/>
          <trusted-key id="A5BD02B93E7A40482EB1D66A5F69AD087600B22C" group="org.ow2.asm"/>
          <trusted-key id="A7892505CF1A58076453E52D7999BEFBA1039E8B" group="net.bytebuddy"/>
          <trusted-key id="ADBC987D1A7B91DB6B0AAA81995EFBF4A3D20BEB" group="com.pinterest.ktlint"/>
@@ -62,6 +65,11 @@
       <component group="com.diffplug.durian" name="durian-swt.os" version="4.3.0">
          <artifact name="durian-swt.os-4.3.0.jar">
             <pgp value="4797B4F5DCC46CEA61059071A1AE06236CA2BA62"/>
+         </artifact>
+      </component>
+      <component group="com.fasterxml.jackson.core" name="jackson-databind" version="2.12.7.1">
+         <artifact name="jackson-databind-2.12.7.1.jar">
+            <pgp value="28118C070CB22A0175A2E8D43D12CA2AC19F3181"/>
          </artifact>
       </component>
       <component group="com.google.code.findbugs" name="jsr305" version="3.0.2">
@@ -234,6 +242,11 @@
             <pgp value="19BEAB2D799C020F17C69126B16698A4ADF4D638"/>
          </artifact>
       </component>
+      <component group="org.codehaus.woodstox" name="stax2-api" version="4.2.1">
+         <artifact name="stax2-api-4.2.1.jar">
+            <pgp value="6214760097DC5CFAD0175AC2C9FBAA83A8753994"/>
+         </artifact>
+      </component>
       <component group="org.ec4j.core" name="ec4j-core" version="0.3.0">
          <artifact name="ec4j-core-0.3.0.jar">
             <pgp value="2E92113263FC31C74CCBAAB20E91C2DE43B72BB1"/>
@@ -247,6 +260,11 @@
       <component group="org.eclipse.platform" name="org.eclipse.osgi" version="3.18.500">
          <artifact name="org.eclipse.osgi-3.18.500.jar">
             <pgp value="9E3044071B758EBCB7E45673700E4F39BC05364B"/>
+         </artifact>
+      </component>
+      <component group="org.freemarker" name="freemarker" version="2.3.32">
+         <artifact name="freemarker-2.3.32.jar">
+            <pgp value="13AC2213964ABE1D1C147C0E1939A2520BAB1D90"/>
          </artifact>
       </component>
       <component group="org.gradle.kotlin" name="gradle-kotlin-dsl-plugins" version="5.2.0">
@@ -284,6 +302,11 @@
             <pgp value="33FD4BFD33554634053D73C0C2148900BCD3C2AF"/>
          </artifact>
       </component>
+      <component group="org.jetbrains" name="markdown-jvm" version="0.7.3">
+         <artifact name="markdown-jvm-0.7.3.jar">
+            <pgp value="CFBE6E7934FB211224EE1C2B0C0A9468268C79AE"/>
+         </artifact>
+      </component>
       <component group="org.jetbrains.intellij.deps" name="trove4j" version="1.0.20200330">
          <artifact name="trove4j-1.0.20200330.jar">
             <pgp value="8756C4F765C9AC3CB6B85D62379CE192D401AB61"/>
@@ -297,6 +320,11 @@
       <component group="org.jetbrains.kotlinx" name="kotlinx-html-jvm" version="0.8.1">
          <artifact name="kotlinx-html-jvm-0.8.1.jar">
             <pgp value="8E3A02905A1AE67E7B0F9ACD3967D4EDA591B991"/>
+         </artifact>
+      </component>
+      <component group="org.jsoup" name="jsoup" version="1.16.1">
+         <artifact name="jsoup-1.16.1.jar">
+            <pgp value="F3184BCD55F4D016E30D4C9BF42E87F9665015C9"/>
          </artifact>
       </component>
       <component group="org.jvnet.staxex" name="stax-ex" version="1.8.1">

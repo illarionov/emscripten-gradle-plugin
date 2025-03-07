@@ -3,15 +3,19 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import com.vanniktech.maven.publish.GradlePlugin
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.SonatypeHost
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
+    `java-gradle-plugin`
     `kotlin-dsl-base`
     alias(libs.plugins.gradle.maven.publish.plugin.base)
-    alias(libs.plugins.gradle.plugin.publish)
     alias(libs.plugins.kotlinx.binary.compatibility.validator)
+    id("at.released.builder.emscripten.buildlogic.project.doc.subproject")
 }
 
 group = "at.released.builder.emscripten"
@@ -38,7 +42,6 @@ java {
 apiValidation {
     nonPublicMarkers.add(internalEmscriptenApiMarker)
 }
-
 
 tasks.withType<AbstractArchiveTask>().configureEach {
     isPreserveFileTimestamps = false
@@ -72,5 +75,55 @@ private fun Test.configureTestTaskDefaults() {
         languageVersion = providers.environmentVariable("TEST_JDK_VERSION")
             .map { JavaLanguageVersion.of(it.toInt()) }
             .orElse(JavaLanguageVersion.of(21))
+    }
+}
+
+gradlePlugin {
+    website = "https://github.com/illarionov/emscripten-gradle-plugin"
+    vcsUrl = "https://github.com/illarionov/emscripten-gradle-plugin"
+}
+
+mavenPublishing {
+    configure(GradlePlugin(javadocJar = JavadocJar.Dokka("dokkaGeneratePublicationHtml")))
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    publishing {
+        repositories {
+            maven {
+                name = "PixnewsS3"
+                setUrl("s3://maven.pixnews.ru/")
+                credentials(AwsCredentials::class) {
+                    accessKey = providers.environmentVariable("YANDEX_S3_ACCESS_KEY_ID").getOrElse("")
+                    secretKey = providers.environmentVariable("YANDEX_S3_SECRET_ACCESS_KEY").getOrElse("")
+                }
+            }
+        }
+    }
+    signAllPublications()
+    extensions.getByType(SigningExtension::class.java).isRequired = false
+
+    pom {
+        name.set(project.name)
+        description.set("Helpers for running Emscripten tasks from Gradle.")
+        url.set("https://github.com/illarionov/emscripten-gradle-plugin")
+
+        licenses {
+            license {
+                name.set("The Apache License, Version 2.0")
+                url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+                distribution.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+            }
+        }
+        developers {
+            developer {
+                id.set("illarionov")
+                name.set("Alexey Illarionov")
+                email.set("alexey@0xdc.ru")
+            }
+        }
+        scm {
+            connection.set("scm:git:git://github.com/illarionov/emscripten-gradle-plugin.git")
+            developerConnection.set("scm:git:ssh://github.com:illarionov/emscripten-gradle-plugin.git")
+            url.set("https://github.com/illarionov/emscripten-gradle-plugin/tree/main")
+        }
     }
 }

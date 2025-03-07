@@ -28,58 +28,11 @@ import javax.inject.Inject
 /**
  * The main helper object for performing operations using Emscripten.
  *
- * Example usage from task:
+ * It allows building the command line for running *emcc*, *emconfigure*, *emmake*, or *embuilder* from the
+ * Emscripten package, as well as setting up the environment.
  *
- * ```kotlin
- * public abstract class SdkSampleTask @Inject constructor(
- *     private val execOperations: ExecOperations,
- *     objects: ObjectFactory,
- * ) {
- *     @get:Nested
- *     public val emscriptenSdk: EmscriptenSdk = objects.newInstance()
+ * See [emscripten-plugin](https://illarionov.github.io/emscripten-gradle-plugin) for example usage
  *
- *     @get:Input
- *     public val outputFileName: Property<String> = objects.property(String::class.java)
- *
- *     @get:OutputDirectory
- *     public val outputDirectory: DirectoryProperty = objects.directoryProperty()
- *
- *     @get:Input
- *     public val workingDir: Property<File> = objects.property(File::class.java)
- *
- *     @get:OutputFile
- *     public val outputFile: RegularFileProperty = objects.fileProperty().convention(
- *         outputDirectory.zip(outputFileName, Directory::file),
- *     )
- *
- *     @TaskAction
- *     public fun build() {
- *         emscriptenSdk.checkEmsdkVersion()
- *         emscriptenSdk.prepareEmscriptenCache()
- *
- *         val cmdLine = emscriptenSdk.buildEmccCommandLine {
- *             add("-o")
- *             add(outputFile.get().toString())
- *             add("-I<includes>")
- *             addAll(listOf("other", "command", "line", "args"))
- *             add("source.c")
- *         }
- *
- *         try {
- *             execOperations.exec {
- *                 this.commandLine = cmdLine
- *                 this.workingDir = workingDir
- *                 this.environment = emscriptenSdk.getEmsdkEnvironment()
- *             }.rethrowFailure().assertNormalExitValue()
- *         } catch (execException: ExecException) {
- *             throw ExecException(
- *                 "Failed to execute `$cmdLine`",
- *                 execException,
- *             )
- *         }
- *     }
- * }
- * ```
  */
 @Suppress("TooManyFunctions")
 public abstract class EmscriptenSdk @Inject constructor(
