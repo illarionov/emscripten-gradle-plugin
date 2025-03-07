@@ -17,6 +17,8 @@ plugins {
 group = "at.released.builder.emscripten"
 version = "0.1-SNAPSHOT"
 
+private val internalEmscriptenApiMarker = "at.released.builder.emscripten.InternalEmscriptenApi"
+
 kotlin {
     explicitApi = ExplicitApiMode.Warning
     compilerOptions {
@@ -25,13 +27,18 @@ kotlin {
         apiVersion = org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_1_6
         languageVersion = org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_1_6
         freeCompilerArgs.addAll("-Xjvm-default=all")
-        optIn = listOf("at.released.builder.emscripten.InternalEmscriptenApi")
+        optIn = listOf(internalEmscriptenApiMarker)
     }
 }
 
 java {
     targetCompatibility = JavaVersion.VERSION_11
 }
+
+apiValidation {
+    nonPublicMarkers.add(internalEmscriptenApiMarker)
+}
+
 
 tasks.withType<AbstractArchiveTask>().configureEach {
     isPreserveFileTimestamps = false
