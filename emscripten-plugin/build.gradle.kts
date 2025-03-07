@@ -19,7 +19,7 @@ plugins {
 }
 
 group = "at.released.builder.emscripten"
-version = "0.1-alpha01"
+version = "0.2-SNAPSHOT"
 
 private val internalEmscriptenApiMarker = "at.released.builder.emscripten.InternalEmscriptenApi"
 
