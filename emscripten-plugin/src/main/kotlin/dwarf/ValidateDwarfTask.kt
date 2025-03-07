@@ -3,8 +3,9 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package at.released.builder.emscripten
+package at.released.builder.emscripten.dwarf
 
+import at.released.builder.emscripten.InternalEmscriptenApi
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.RegularFileProperty
 import org.gradle.api.model.ObjectFactory
@@ -17,8 +18,6 @@ import org.gradle.process.ExecOperations
 import org.gradle.process.internal.ExecException
 import java.io.ByteArrayOutputStream
 import javax.inject.Inject
-import kotlin.text.RegexOption.IGNORE_CASE
-import kotlin.text.RegexOption.MULTILINE
 
 /**
  * Validates that the DWARF debug information of the WebAssembly binary does not contain absolute paths.
@@ -30,9 +29,16 @@ public open class ValidateDwarfTask @Inject constructor(
     private val execOperations: ExecOperations,
     objects: ObjectFactory,
 ) : DefaultTask() {
+
+    /**
+     * WASM binary file to validate
+     */
     @get:InputFile
     public val wasmBinary: RegularFileProperty = objects.fileProperty()
 
+    /**
+     * Strings that shouldn't be in paths
+     */
     @get:Input
     public val paths: ListProperty<String> = objects.listProperty()
 
@@ -56,37 +62,11 @@ public open class ValidateDwarfTask @Inject constructor(
         }
 
         val sources = outputStream.toString()
-        val paths = findStringsStartsWithPath(sources, paths.get())
+        val paths = sources.findStringsStartsWithPath(paths.get())
         if (paths.isNotEmpty()) {
             logger.error("Wasm binary `$binary` contains not mapped paths: ${paths.joinToString(", ")}")
         }
     }
 
-    internal companion object {
-        internal fun findStringsStartsWithPath(
-            content: String,
-            paths: List<String>,
-        ): Set<String> {
-            val pattern = getPatternStringStartsWithAnyOf(paths)
-            val matches = pattern.findAll(content)
-                .map { it.value }
-                .distinct()
-                .toSortedSet()
-            return matches
-        }
-
-        internal fun getPatternStringStartsWithAnyOf(paths: List<String>): Regex {
-            if (paths.isEmpty()) {
-                return Regex("""^$""")
-            }
-            return paths
-                .joinToString(
-                    separator = "|",
-                    prefix = """^(?:""",
-                    postfix = """).*$""",
-                    transform = Regex::escape,
-                )
-                .toRegex(setOf(MULTILINE, IGNORE_CASE))
-        }
-    }
+    public companion object
 }

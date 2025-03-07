@@ -1,5 +1,9 @@
-public final class at/released/builder/emscripten/EmscriptenAttributes {
-	public static final field INSTANCE Lat/released/builder/emscripten/EmscriptenAttributes;
+public final class at/released/builder/emscripten/EmscriptenAttribute {
+	public static final field INSTANCE Lat/released/builder/emscripten/EmscriptenAttribute;
+	public static final field MACHINE_ARCHITECTURE_WASM32 Ljava/lang/String;
+	public static final field OPERATING_SYSTEM_FAMILY_EMSCRIPTEN Ljava/lang/String;
+	public static final field USAGE_WASM_API Ljava/lang/String;
+	public static final field USAGE_WASM_RUNTIME Ljava/lang/String;
 	public final fun getEMSCRIPTEN_USE_PTHREADS_ATTRIBUTE ()Lorg/gradle/api/attributes/Attribute;
 	public final fun getEmscriptenOperatingSystem (Lorg/gradle/api/model/ObjectFactory;)Lorg/gradle/nativeplatform/OperatingSystemFamily;
 	public final fun getWasm32Architecture (Lorg/gradle/api/model/ObjectFactory;)Lorg/gradle/nativeplatform/MachineArchitecture;
@@ -50,10 +54,14 @@ public abstract class at/released/builder/emscripten/EmscriptenSdk {
 public abstract interface annotation class at/released/builder/emscripten/InternalEmscriptenApi : java/lang/annotation/Annotation {
 }
 
-public class at/released/builder/emscripten/ValidateDwarfTask : org/gradle/api/DefaultTask {
+public class at/released/builder/emscripten/dwarf/ValidateDwarfTask : org/gradle/api/DefaultTask {
+	public static final field Companion Lat/released/builder/emscripten/dwarf/ValidateDwarfTask$Companion;
 	public fun <init> (Lorg/gradle/process/ExecOperations;Lorg/gradle/api/model/ObjectFactory;)V
 	public final fun getPaths ()Lorg/gradle/api/provider/ListProperty;
 	public final fun getWasmBinary ()Lorg/gradle/api/file/RegularFileProperty;
 	public final fun validate ()V
+}
+
+public final class at/released/builder/emscripten/dwarf/ValidateDwarfTask$Companion {
 }
 

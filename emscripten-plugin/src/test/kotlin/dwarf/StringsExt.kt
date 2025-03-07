@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-package ru.pixnews.wasm.builder.base
+package ru.pixnews.wasm.builder.base.dwarf
 
 import assertk.assertThat
 import assertk.assertions.containsExactly
-import at.released.builder.emscripten.ValidateDwarfTask.Companion.findStringsStartsWithPath
+import at.released.builder.emscripten.dwarf.findStringsStartsWithPath
 import org.junit.jupiter.api.Test
 
-class ValidateDwarfTaskTest {
+class StringsExt {
     @Test
     fun `getPatternStringStartsWithAnyOf() should return correct substrings`() {
         val testContent = listOf(
@@ -30,7 +30,7 @@ class ValidateDwarfTaskTest {
             "/home/work",
             "/home/user",
         )
-        val incorrectPaths = findStringsStartsWithPath(testContent, shouldNotContainPaths)
+        val incorrectPaths = testContent.findStringsStartsWithPath(shouldNotContainPaths)
 
         assertThat(incorrectPaths.toList())
             .containsExactly(

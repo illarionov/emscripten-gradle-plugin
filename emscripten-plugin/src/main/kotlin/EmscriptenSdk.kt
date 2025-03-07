@@ -25,26 +25,94 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 import javax.inject.Inject
 
+/**
+ * The main helper object for performing operations using Emscripten.
+ *
+ * Example usage from task:
+ *
+ * ```kotlin
+ * public abstract class SdkSampleTask @Inject constructor(
+ *     private val execOperations: ExecOperations,
+ *     objects: ObjectFactory,
+ * ) {
+ *     @get:Nested
+ *     public val emscriptenSdk: EmscriptenSdk = objects.newInstance()
+ *
+ *     @get:Input
+ *     public val outputFileName: Property<String> = objects.property(String::class.java)
+ *
+ *     @get:OutputDirectory
+ *     public val outputDirectory: DirectoryProperty = objects.directoryProperty()
+ *
+ *     @get:Input
+ *     public val workingDir: Property<File> = objects.property(File::class.java)
+ *
+ *     @get:OutputFile
+ *     public val outputFile: RegularFileProperty = objects.fileProperty().convention(
+ *         outputDirectory.zip(outputFileName, Directory::file),
+ *     )
+ *
+ *     @TaskAction
+ *     public fun build() {
+ *         emscriptenSdk.checkEmsdkVersion()
+ *         emscriptenSdk.prepareEmscriptenCache()
+ *
+ *         val cmdLine = emscriptenSdk.buildEmccCommandLine {
+ *             add("-o")
+ *             add(outputFile.get().toString())
+ *             add("-I<includes>")
+ *             addAll(listOf("other", "command", "line", "args"))
+ *             add("source.c")
+ *         }
+ *
+ *         try {
+ *             execOperations.exec {
+ *                 this.commandLine = cmdLine
+ *                 this.workingDir = workingDir
+ *                 this.environment = emscriptenSdk.getEmsdkEnvironment()
+ *             }.rethrowFailure().assertNormalExitValue()
+ *         } catch (execException: ExecException) {
+ *             throw ExecException(
+ *                 "Failed to execute `$cmdLine`",
+ *                 execException,
+ *             )
+ *         }
+ *     }
+ * }
+ * ```
+ */
 @Suppress("TooManyFunctions")
 public abstract class EmscriptenSdk @Inject constructor(
     objects: ObjectFactory,
     providers: ProviderFactory,
     private val execOperations: ExecOperations,
 ) {
+    /**
+     * Path to Emscripten SDK
+     */
     @get:Input
     @Optional
     public val emscriptenRoot: Property<File> = objects.property(File::class.java).convention(
         providers.defaultEmscriptenRoot(),
     )
 
+    /**
+     * Version of the Emscripten that should be used.
+     */
     @get:Input
     @get:Optional
     public val emccVersion: Property<String> = objects.property(String::class.java)
-        .convention("3.1.55")
+        .convention(EMSCRIPTEN_VERSION)
 
+    /**
+     * The directory that will be used for the cache
+     */
     @get:Internal
     public val emscriptenCacheDir: DirectoryProperty = objects.directoryProperty()
 
+    /**
+     * Directory with cache prepared in advance using [EmscriptenPrepareCacheTask] task.
+     */
     @get:InputDirectory
     @get:PathSensitive(PathSensitivity.RELATIVE)
     @get:Optional
@@ -71,6 +139,9 @@ public abstract class EmscriptenSdk @Inject constructor(
     public val emMakeExecutablePath: Property<String> = objects.property(String::class.java)
         .convention("upstream/emscripten/emmake")
 
+    /**
+     * Builds [emcc](https://emscripten.org/docs/tools_reference/emcc.html) command line.
+     */
     public fun buildEmccCommandLine(
         builderAction: MutableList<String>.() -> Unit,
     ): List<String> = buildList {
@@ -89,6 +160,9 @@ public abstract class EmscriptenSdk @Inject constructor(
         builderAction()
     }
 
+    /**
+     * Builds [emconfigure](http://emscripten.org/docs/compiling/Building-Projects.html) command line.
+     */
     public fun buildEmconfigureCommandLine(
         builderAction: MutableList<String>.() -> Unit,
     ): List<String> = buildList {
@@ -100,6 +174,9 @@ public abstract class EmscriptenSdk @Inject constructor(
         builderAction()
     }
 
+    /**
+     * Builds [emmake](http://emscripten.org/docs/compiling/Building-Projects.html) command line.
+     */
     public fun buildEmMakeCommandLine(
         builderAction: MutableList<String>.() -> Unit,
     ): List<String> = buildList {
@@ -111,6 +188,9 @@ public abstract class EmscriptenSdk @Inject constructor(
         builderAction()
     }
 
+    /**
+     * Builds [embuilder](https://github.com/emscripten-core/emscripten/blob/main/embuilder.py) command line.
+     */
     public fun buildEmBuilderCommandLine(
         builderAction: MutableList<String>.() -> Unit,
     ): List<String> = buildList {
@@ -119,6 +199,9 @@ public abstract class EmscriptenSdk @Inject constructor(
         builderAction()
     }
 
+    /**
+     * Validates that the version specified in [emccVersion] is active in the SDK directory [emscriptenRoot]
+     */
     public fun checkEmsdkVersion() {
         if (!emccVersion.isPresent) {
             return
@@ -134,11 +217,17 @@ public abstract class EmscriptenSdk @Inject constructor(
         }
     }
 
+    /**
+     * Returns environment variables that must be set when calling Emscripten executables
+     */
     @Internal
     public fun getEmsdkEnvironment(): Map<String, String> = buildMap {
         put("EMSDK", emscriptenRoot.get().toString())
     }
 
+    /**
+     * Prepares cache directory [emscriptenCacheDir] from [emscriptenCacheBase]
+     */
     public fun prepareEmscriptenCache() {
         if (!emscriptenCacheBase.isPresent) {
             return
@@ -205,6 +294,8 @@ public abstract class EmscriptenSdk @Inject constructor(
     }
 
     private companion object {
+        internal const val EMSCRIPTEN_VERSION = "4.0.4"
+
         private val EMCC_VERSION_REGEX = """emcc\s+\(Emscripten.+\)\s+(\S+)\s+.*""".toRegex()
 
         public fun ProviderFactory.defaultEmscriptenRoot(): Provider<File> = this

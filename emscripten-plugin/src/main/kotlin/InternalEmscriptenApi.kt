@@ -21,5 +21,4 @@ package at.released.builder.emscripten
     AnnotationTarget.PROPERTY_SETTER,
 )
 @Retention(AnnotationRetention.BINARY)
-public annotation class InternalEmscriptenApi {
-}
+public annotation class InternalEmscriptenApi

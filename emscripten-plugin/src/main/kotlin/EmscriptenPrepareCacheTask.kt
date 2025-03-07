@@ -29,6 +29,8 @@ import javax.inject.Inject
  * Compiles system libraries and prepares the Emscripten cache for future use with embuilder.
  * It helps achieve more reproducible builds, as this compilation uses the debug-prefix-map parameter to get
  * deterministic paths in the DWARF debug info.
+ *
+ * See [embuilder.py](https://github.com/emscripten-core/emscripten/blob/main/embuilder.py)
  */
 @CacheableTask
 public open class EmscriptenPrepareCacheTask @Inject constructor(
@@ -114,7 +116,6 @@ public open class EmscriptenPrepareCacheTask @Inject constructor(
     }
 
     private fun buildCommandLine(): List<String> = emscriptenSdk.buildEmBuilderCommandLine {
-        @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
         when (lto.get()) {
             LinkTimeOptimizer.NONE -> Unit
             LinkTimeOptimizer.FULL -> add("--lto")

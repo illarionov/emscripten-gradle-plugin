@@ -14,7 +14,15 @@ import org.gradle.kotlin.dsl.named
 import org.gradle.nativeplatform.MachineArchitecture
 import org.gradle.nativeplatform.OperatingSystemFamily
 
-public object EmscriptenAttributes {
+public object EmscriptenAttribute {
+    public const val MACHINE_ARCHITECTURE_WASM32: String = "wasm32"
+
+    public const val OPERATING_SYSTEM_FAMILY_EMSCRIPTEN: String = "emscripten"
+
+    public const val USAGE_WASM_API: String = "wasm-api"
+
+    public const val USAGE_WASM_RUNTIME: String = "wasm-runtime"
+
     /**
      * Attribute to mark code compiled with multithreading support using pthread
      */
@@ -23,16 +31,18 @@ public object EmscriptenAttributes {
         Boolean::class.javaObjectType,
     )
 
+    public val ObjectFactory.wasm32Architecture: MachineArchitecture
+        get() = named(MACHINE_ARCHITECTURE_WASM32)
 
-    public val ObjectFactory.wasm32Architecture: MachineArchitecture get() = named("wasm32")
+    public val ObjectFactory.emscriptenOperatingSystem: OperatingSystemFamily
+        get() = named(OPERATING_SYSTEM_FAMILY_EMSCRIPTEN)
 
-    public val ObjectFactory.emscriptenOperatingSystem: OperatingSystemFamily get() = named("emscripten")
+    public val ObjectFactory.wasmApiUsage: Usage
+        get() = named(USAGE_WASM_API)
 
-    public val ObjectFactory.wasmApiUsage: Usage get() = named("wasm-api")
+    public val ObjectFactory.wasmRuntimeUsage: Usage
+        get() = named(USAGE_WASM_RUNTIME)
 
-    public val ObjectFactory.wasmRuntimeUsage: Usage get() = named("wasm-runtime")
-
-    public val ObjectFactory.wasmBinaryLibraryElements: LibraryElements get() = named(DYNAMIC_LIB)
+    public val ObjectFactory.wasmBinaryLibraryElements: LibraryElements
+        get() = named(DYNAMIC_LIB)
 }
-
-

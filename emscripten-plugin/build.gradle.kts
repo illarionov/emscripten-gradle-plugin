@@ -3,13 +3,12 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
+import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.jetbrains.kotlin.gradle.dsl.ExplicitApiMode
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 plugins {
-    // `kotlin-dsl-base`
-    `kotlin-dsl`
+    `kotlin-dsl-base`
     alias(libs.plugins.gradle.maven.publish.plugin.base)
     alias(libs.plugins.gradle.plugin.publish)
     alias(libs.plugins.kotlinx.binary.compatibility.validator)
@@ -42,9 +41,9 @@ tasks.withType<AbstractArchiveTask>().configureEach {
 dependencies {
     testImplementation(platform(libs.junit.bom))
     testImplementation(libs.assertk)
-    testImplementation(libs.junit.jupiter.api)
+    testImplementation(libs.junit.jupiter)
     testImplementation(libs.junit.jupiter.params)
-    testRuntimeOnly(libs.junit.jupiter.engine)
+    testRuntimeOnly(libs.junit.platform.launcher)
 }
 
 tasks.withType<Test> {
