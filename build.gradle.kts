@@ -6,6 +6,9 @@
 plugins {
     id("at.released.builder.emscripten.buildlogic.project.lint.detekt")
     id("at.released.builder.emscripten.buildlogic.project.lint.spotless")
+    alias(libs.plugins.dokka) apply false
+    alias(libs.plugins.gradle.maven.publish.plugin.base) apply false
+    alias(libs.plugins.kotlin.jvm) apply false
 }
 
 tasks.register("styleCheck") {

@@ -8,7 +8,7 @@ kotlin = "2.1.10"
 
 assertk = "0.28.1"
 detekt = "1.23.8"
-gradle-plugin-publish = "1.3.1"
+dokka = "2.0.0"
 gradle-maven-publish-plugin = "0.31.0"
 junit5 = "5.12.0"
 kotlinx-binary-compatibility-validator = "0.17.0"
@@ -25,9 +25,10 @@ detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-form
 detekt-plugin = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
 kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 spotless-plugin = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version.ref = "spotless" }
+dokka-plugin = { group = "org.jetbrains.dokka", name = "org.jetbrains.dokka.gradle.plugin", version.ref = "dokka" }
 
 [plugins]
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-gradle-plugin-publish = { id = "com.gradle.plugin-publish", version.ref = "gradle-plugin-publish" }
 gradle-maven-publish-plugin-base = { id = "com.vanniktech.maven.publish.base", version.ref = "gradle-maven-publish-plugin" }
 kotlinx-binary-compatibility-validator = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version.ref = "kotlinx-binary-compatibility-validator" }

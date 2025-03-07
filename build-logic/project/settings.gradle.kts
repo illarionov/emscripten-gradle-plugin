@@ -32,6 +32,7 @@ dependencyResolutionManagement {
     }
 }
 
+include("documentation")
 include("lint")
 
 rootProject.name = "emscripten-gradle-project-plugins"

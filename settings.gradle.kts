@@ -34,3 +34,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "emscripten-gradle-plugin"
 include("emscripten-plugin")
+include("doc:aggregate-documentation")
