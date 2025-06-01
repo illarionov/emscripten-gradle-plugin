@@ -10,7 +10,7 @@ assertk = "0.28.1"
 detekt = "1.23.8"
 dokka = "2.0.0"
 gradle-maven-publish-plugin = "0.32.0"
-junit5 = "5.12.2"
+junit5 = "5.13.0"
 kotlinx-binary-compatibility-validator = "0.17.0"
 spotless = "7.0.2"
 
